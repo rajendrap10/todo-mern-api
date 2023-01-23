@@ -5,7 +5,7 @@ const connectToDB = require("./config/db");
 const toDoRoutes = require("./routes/toDoRoutes");
 const userRoutes = require("./routes/userRoutes");
 const auth = require("./middleware/auth");
-import cors from "cors";
+const cors = require("cors");
 
 const app = express();
 
@@ -14,16 +14,14 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const cors = require("cors");
-const corsOptions = {
-  origin: "https://todo-app-mern.herokuapp.com:5000",
-  credentials: true, //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-app.use(cors(corsOptions));
+app.use(cors());
 connectToDB();
 
 app.use("/auth", userRoutes);
-app.use("/", auth, toDoRoutes);
+app.use("/todolist", auth, toDoRoutes);
+
+app.get("/", (req, res) => {
+    res.status(200).send("TO-DO Application API !");
+})
 
 module.exports = app;
