@@ -5,6 +5,7 @@ const connectToDB = require("./config/db");
 const toDoRoutes = require("./routes/toDoRoutes");
 const userRoutes = require("./routes/userRoutes");
 const auth = require("./middleware/auth");
+import cors from "cors";
 
 const app = express();
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 connectToDB();
 
 app.use("/auth", userRoutes);
